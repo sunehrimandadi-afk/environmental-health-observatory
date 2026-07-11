@@ -20,3 +20,10 @@ How can statistical models quantify and predict environmental health risk by ana
 - SQLite
 - Streamlit
 - GitHub
+- Matplotlib
+- Requests
+- Jupyter
+- SciPy
+- Scikit-learn
+- Numpy
+- Plotly 
