@@ -11,7 +11,7 @@ How can statistical models quantify and predict environmental health risk by ana
 ## Data Sources
 
 - Open-Meteo API
-- EPA AirNow API (or OpenAQ)
+- EPA AirNow API 
 
 ## Tools
 
