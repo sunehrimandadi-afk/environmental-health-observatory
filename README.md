@@ -6,7 +6,7 @@ This project investigates how weather conditions and air quality change over tim
 
 ## Research Question
 
-How do heat and air quality patterns change over time, and how might they relate to environmental health risk?
+How can statistical models quantify and predict environmental health risk by analyzing the relationship between extreme temperatures and PM2.5 concentrations across U.S. cities?
 
 ## Data Sources
 
