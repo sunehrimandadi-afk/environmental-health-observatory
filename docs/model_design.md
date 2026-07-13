@@ -37,22 +37,25 @@ Determine how environmental conditions influence pollution levels.
 
 ## Model 2: Environmental Risk Score
 
-A risk score will combine heat and pollution exposure.
+Daily temperature values will be transformed using z-score standardization:
 
-Heat Score:
+z = (x - mean) / standard deviation
 
-Temperature values will be normalized between 0 and 1.
+Higher positive z-scores indicate temperatures that are unusually high compared to typical conditions.
 
-PM2.5 Score:
+### PM2.5 Score
 
-PM2.5 values will be normalized between 0 and 1.
+Daily PM2.5 concentrations will also be transformed using z-score standardization.
 
-Initial Risk Score:
+Higher positive z-scores indicate unusually high pollution levels.
 
-Risk Score = 0.5(Heat Score) + 0.5(PM2.5 Score)
+### Initial Risk Score
 
-The weights may be adjusted later based on statistical analysis.
+The initial environmental risk score will combine heat and pollution exposure:
 
+Risk Score = 0.5(Heat z-score) + 0.5(PM2.5 z-score)
+
+Equal weights are used as a baseline assumption. These weights may be modified later based on statistical analysis and model results.
 ---
 
 ## Analysis Steps
