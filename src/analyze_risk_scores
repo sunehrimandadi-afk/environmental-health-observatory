@@ -1,0 +1,191 @@
+import pandas as pd
+
+
+# ----------------------------
+# Load Data
+# ----------------------------
+
+file = (
+    "data/processed/model_results/"
+    "environmental_health_risk.csv"
+)
+
+df = pd.read_csv(file)
+
+
+df["date"] = pd.to_datetime(df["date"])
+
+
+print("\nDataset Preview:")
+print(df.head())
+
+
+# ----------------------------
+# 1. Average Risk By City
+# ----------------------------
+
+city_summary = (
+    df.groupby("City")
+    .agg(
+        Avg_Heat_Risk=(
+            "Heat_Risk",
+            "mean"
+        ),
+
+        Avg_Air_Quality_Risk=(
+            "Air_Quality_Risk",
+            "mean"
+        ),
+
+        Avg_Environmental_Risk=(
+            "Environmental_Exposure_Risk",
+            "mean"
+        )
+    )
+    .reset_index()
+)
+
+
+city_summary = city_summary.sort_values(
+    by="Avg_Environmental_Risk",
+    ascending=False
+)
+
+
+print("\nAverage Risk By City:")
+print(city_summary)
+
+
+city_summary.to_csv(
+    "data/processed/model_results/city_risk_summary.csv",
+    index=False
+)
+
+
+# ----------------------------
+# 2. Highest Environmental Risk Days
+# ----------------------------
+
+top_environmental_days = (
+    df.sort_values(
+        by="Environmental_Exposure_Risk",
+        ascending=False
+    )
+    .head(10)
+)
+
+
+print("\nTop 10 Environmental Risk Days:")
+
+print(
+    top_environmental_days[
+        [
+            "date",
+            "City",
+            "Heat_Risk",
+            "Air_Quality_Risk",
+            "Environmental_Exposure_Risk"
+        ]
+    ]
+)
+
+
+top_environmental_days.to_csv(
+    "data/processed/model_results/top_environmental_risk_days.csv",
+    index=False
+)
+
+
+# ----------------------------
+# 3. Highest PM2.5 Days
+# ----------------------------
+
+pm25_df = df.dropna(
+    subset=["pm25"]
+)
+
+
+top_pm25_days = (
+    pm25_df.sort_values(
+        by="pm25",
+        ascending=False
+    )
+    .head(10)
+)
+
+
+print("\nTop 10 PM2.5 Days:")
+
+print(
+    top_pm25_days[
+        [
+            "date",
+            "City",
+            "pm25",
+            "AQI",
+            "Air_Quality_Risk"
+        ]
+    ]
+)
+
+
+top_pm25_days.to_csv(
+    "data/processed/model_results/top_pm25_days.csv",
+    index=False
+)
+
+
+# ----------------------------
+# 4. Highest Heat Days
+# ----------------------------
+
+top_heat_days = (
+    df.sort_values(
+        by="Heat_Risk",
+        ascending=False
+    )
+    .head(10)
+)
+
+
+print("\nTop 10 Heat Risk Days:")
+
+print(
+    top_heat_days[
+        [
+            "date",
+            "City",
+            "temperature",
+            "humidity",
+            "heat_index",
+            "Heat_Risk"
+        ]
+    ]
+)
+
+
+top_heat_days.to_csv(
+    "data/processed/model_results/top_heat_days.csv",
+    index=False
+)
+
+
+# ----------------------------
+# 5. Main Risk Driver
+# ----------------------------
+
+print("\nAverage Component Scores:")
+
+print(
+    df[
+        [
+            "Heat_Risk",
+            "Air_Quality_Risk"
+        ]
+    ].mean()
+)
+
+
+print(
+    "\nAnalysis complete. Files saved."
+)
